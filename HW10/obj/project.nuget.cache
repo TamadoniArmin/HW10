@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "xLGqG7w71CflP8+HDQQnh4hJ7EjZblbu24BOeSJox8VWMOPbEoPXIQ6EGq6MM+yLGYhLxPCva1RfPeb5qGYBBg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Tamadoni\\OneDrive\\Desktop\\برنامه نویسی\\تکالیف\\HW - week 10\\HW10\\HW10\\HW10.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Tamadoni\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
