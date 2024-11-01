@@ -1,4 +1,5 @@
 ﻿using HW10;
+using HW10.Repository;
 using HW10.Service;
 using System.Security.Cryptography.X509Certificates;
 
@@ -9,9 +10,9 @@ while (true)
     Console.WriteLine("***** Wellcome *****");
     Console.Write("Please enter your command: ");
     var command = Console.ReadLine();
-    var acc=command.Split(" ");
+    var acc = command.Split(" ");
     var check1 = acc[0].ToLower();
-    if (check1 != "login" || check1 != "register")
+    if (check1 != "login" && check1 != "register")
     {
         Console.WriteLine("Command is invalid");
         continue;
@@ -20,12 +21,12 @@ while (true)
     {
         if (check1 == "login")
         {
-            Identification identification = new Identification();
-            bool login = identification.Login(acc[2], acc[4]);
+            DapperRepasitory dapperRepasitory = new DapperRepasitory();
+            bool login = dapperRepasitory.Login(acc[2], acc[4]);
             if (!login)
             {
                 Console.WriteLine("The information is not correct!");
-                continue; 
+                continue;
             }
             else
             {
@@ -35,8 +36,8 @@ while (true)
         }
         else if (check1 == "register")
         {
-            Identification identification = new Identification();
-            bool register = identification.Register(acc[2], acc[4]);
+            DapperRepasitory dapperRepasitory = new DapperRepasitory();
+            bool register = dapperRepasitory.Register(acc[2], acc[4]);
             if (!register)
             {
                 Console.WriteLine("Oops.... There might be some problems.");
@@ -46,7 +47,7 @@ while (true)
             {
                 Console.WriteLine("Done.");
                 Console.WriteLine("Now please login.");
-                continue; 
+                continue;
             }
         }
     }
@@ -55,48 +56,52 @@ while (true)
         Console.WriteLine(ex.Message);
     }
 
-}
-
-//var parameters = new Dictionary<string, string>();
-//parameters["username"] = "armin";
-//parameters["password"] = "123456";
 
 
+    //var parameters = new Dictionary<string, string>();
+    //parameters["username"] = "armin";
+    //parameters["password"] = "123456";
 
-void Usermeniue()
+
+
+    void Usermeniue()
     {
+        DapperRepasitory dapperRepasitory = new DapperRepasitory();
         Console.Write("Please enter your command: ");
         var usercommand = Console.ReadLine();
         var newacc = usercommand.Split(" ");
-        var answer1= newacc[0].ToLower();
-        Userservice userservice = new Userservice();
-        if (answer1=="change")
+        var answer1 = newacc[0].ToLower();
+        if (answer1 == "change")
         {
             if (newacc[2] == "available")
             {
-                userservice.ChangeStatus(acc[2],true);
+                dapperRepasitory.ChangeStatus(acc[2], true);
             }
-            else if (newacc[2]=="not available")
+            else if (newacc[2] == "not available")
             {
-                userservice.ChangeStatus(acc[2], false);
+                dapperRepasitory.ChangeStatus(acc[2], false);
             }
             else
             {
                 throw new Exception("Command is invalid!");
             }
         }
-        else if (answer1=="search")
+        else if (answer1 == "search")
         {
-            Console.WriteLine("Please enter your wanted name: ");
-            var answer2 = Console.ReadLine();
-            userservice.Search(answer2);
+            var users = dapperRepasitory.Search(newacc[2]);
+            foreach (var user in users)
+            {
+                Console.WriteLine(user.Username+" | "+user.statuse);
+            }
+            
         }
-        else if (answer1=="changepassword")
+        else if (answer1 == "changepassword")
         {
-            bool res3 = userservice.ChangePassword(acc[2], newacc[2], newacc[3]);
+            bool res3 = dapperRepasitory.ChangePassword(acc[2], newacc[2], newacc[4]);
         }
-        else if (answer1=="logout")
+        else if (answer1 == "logout")
         {
             InmemoryDB.currentuser = null;
         }
     }
+}
